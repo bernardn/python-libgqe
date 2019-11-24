@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+# encoding: utf-8
+"""
+gqe-cli - Command Line Interface for libgqe
+
+Copyright (c) Bernard Nauwelaerts 2019.
+All rights reserved
+
+This program is free software; you can redistribute it and/or modify it under the terms of the
+GNU General Public License as published by the Free Software Foundation; version 2.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program;
+if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+
+"""
+
+import sys
+import time
+import argparse
+
+from libgqe.unit import Unit
+from libgqe.protocol import Protocol
+
+
+class Executor(argparse.Action):  # pylint: disable=too-few-public-methods
+    """ Class for executing argparse actions """
+    def __init__(self, *largs, **kwargs):
+        super(Executor, self).__init__(*largs, **kwargs)
+        self.format = 'txt'
+        self.in_file = None
+        self.out_file = sys.stdout
+        self.unit = None
+
+    def __call__(self, parsers, namespace, values, option_string=None):
+        option_string = option_string.lstrip('--')
+        r = None
+        try:
+            self.unit.action(
+                option_string,
+                *values,
+                format=self.format,
+                in_file=self.in_file,
+                out_file=self.out_file
+            )
+
+        except Unit.UnavailableActionError:
+            print('{} : The specified action is unavailable to the unit.'.format(option_string), file=sys.stderr)
+            sys.exit(1)
+        except Protocol.Response.EmptyError:
+            print('{} : No reply has been received from the device.'.format(option_string), file=sys.stderr)
+            sys.exit(1)
+        except (Protocol.Response.UnexpectedValueError, Protocol.Response.SizeMismatchError, ValueError) as err:
+            print("{} : {}".format(option_string, err), file=sys.stderr)
+            sys.exit(1)
+        except KeyboardInterrupt:
+            print('{} : Interrupted by user'.format(option_string), file=sys.stderr)
+            sys.exit(1)
+
+        if r:
+            time.sleep(0.15)
+
+
+def main():
+    """CLI entry point"""
+    parser = argparse.ArgumentParser(description='LibGQE Command Line Interface.', add_help=False)
+
+    group_1 = parser.add_argument_group('interface')
+    group_1.add_argument('port', type=str, help='RS232 interface to the unit to be controlled')
+    group_1.add_argument('--unit', help='Unit model ID')
+    group_1.add_argument('--revision', help='Unit firmware revision')
+
+    args = parser.parse_known_args(sys.argv[1:])[0]
+    parser.add_argument('--out-file', help='Output response to specified file')
+    parser.add_argument('--in-file', help='Input file')
+    parser.add_argument('--format', default='txt', help='Output or input format')
+    parser.add_argument('--help', action='store_true', help='show this help message and exit.')
+
+    args = parser.parse_known_args(sys.argv[1:])[0]
+    parser.add_help = True
+
+    try:
+        unit = None
+        vers = None
+        if args.unit:
+            unit = args.unit
+        if args.revision:
+            vers = args.revision
+        # todo autolad in unit
+        unit = Unit(port=args.port, unit=unit, version=vers)
+        unit = unit.auto_load()
+
+    except FileNotFoundError as err:
+        print("Can't open RS232 interface: {}".format(err))
+        sys.exit(1)
+    except Unit.UnknownUnitModelError:
+        print('{} : The specified unit model is unknown to this software.'.format(args.unit), file=sys.stderr)
+        sys.exit(1)
+
+    group_2 = parser.add_argument_group('actions available on unit:')
+    for act, dta in unit.actions.items():
+        opt = group_2.add_argument('--' + act, nargs=dta[0], help=dta[1], action=Executor)
+        opt.unit = unit
+        if args.format:
+            opt.format = args.format
+        if args.in_file:
+            opt.in_file = args.in_file
+        if args.out_file:
+            opt.out_file = args.out_file
+
+    parser.parse_args(sys.argv[1:])
+
+    if args.help:
+        parser.print_help()
+
+    sys.exit(0)
+
+# def _get_filename(s, out_dir, data_type, extension):
+#     if not out_dir:
+#         out_dir = ''
+#     arr = [s.cmd_get_serial()[0], data_type, str(datetime.datetime.now().timestamp()), extension]
+#     return out_dir + '.'.join(arr)
+
+
+main()

@@ -1,0 +1,19 @@
+---
+# Action list to perform a backup of the unit
+playbook:
+  unit: GQ-EMF390  # todo unit: force
+  revision: 1.91
+  actions:
+    - power: off
+    - get-cfg:
+        format: raw
+        out_file: myunit.cfg.bin
+    - get-cfg:
+        format: json
+        out_file: myunit.cfg.json
+    - spi-get:
+        format: raw
+        out_file: myunit.spi.bin
+    - rtc-sync
+    - spi-erase
+    - power: on

@@ -1,0 +1,11 @@
+---
+# Action list to go to next mode
+playbook:
+  _unit: GQ-EMF390  # unit: force
+  _revision: 1.91
+  actions:
+    - key-press: 0
+    - wait: 0.5
+    - key-press: 1
+    - wait: 0.5
+    - key-press: 3

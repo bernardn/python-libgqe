@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+*.pyc
+*.bin
+*.bmp
+*.csv
+__pycache__/
+data/
+screen/

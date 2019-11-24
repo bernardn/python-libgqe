@@ -1,0 +1,595 @@
+***************************************************
+GQ-RFC1701
+
+GQ EMF Communication Protocol
+***************************************************
+Ver 1.00	Dec-2017
+Ver 2.00	Nov-2018
+		Updated some of the commands
+		Added <GETXYZ>>
+		Added <RESETBANDDATA>>
+		Added <GETSPECTRUMFULLSCANFLAG>>
+Ver 2.01	Supports 2.16 Firmware and above.
+		Removed <GETRF8GTOTALDENSITY>> and <GETRF8GTOTALPEAK>>
+		Changed some commands to <GETRFTOTALDENSITY>> <GETRFTOTALDENSITYPEAK>>
+
+Status of this Memo
+
+   This document specifies a GQ EMF  Communication Protocol for the
+   communication between GQ Milti-Field EMF Meter and a computer host via serial port, and requests discussion and suggestions for
+   improvements.  Distribution of this memo is unlimited.
+
+Copyright Notice
+
+   Copyright (C) GQ Electronics LLC (2017).  All Rights Reserved.
+
+Abstract
+
+   This document defines a GQ GMC Geiger Counter Communication Protocol
+   to support communication between GQ  Milti-Field EMF Meter and a computer host via serial port.  The protocol allows to send data request command from a computer host to a GQ GMC geiger counter. 
+
+
+**************************
+Serial Port configuration
+**************************
+
+Baud: 115200
+Data bit: 8
+Parity: None
+Stop bit: 1
+Control: None
+
+
+**************************
+Command format
+**************************
+
+A valid command start with ASCII '<'  and ended with ASCII '>>'. Both command and parameters are in between '<' and '>>'.
+
+Command is a ASCII string. All parameters of command are true value in hexadecimal. 
+
+
+Direction: All commands are initiated from computer(HOST).
+
+Firmware supported: GQ-EMF380v2, GQ-EMF390, GQ-EMF360v2, GQ-EMF360+v2, GQ-EMF380, GQ-EMF360+, GQ-EMF360
+	(except some other commands that EMF360, EMF360v2, EMF360+, EMF360+v2 can't support)
+	(Those commands will either return a non valid value or make the device not functional)
+
+
+**************************
+Commands
+**************************
+/*******************************************************************************************************************************************************/
+1. Get hardware model and version
+
+Command:  <GETVER>>
+
+
+Return:   Version of the device. Ends char characters '\r' '\n' or 0x0D 0x0A in hex
+
+	  e.g.:  GQ-EMF380Re 1.00\r\n
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+Note: *** for newer release
+
+/*******************************************************************************************************************************************************/
+2. Key Commands that simmulates a key press from the unit
+
+Commands:	<KEY0>> (back key) 	 	Represents Key S0 from the unit
+		<KEY1>> (down key) 	  	Represents Key S1 from the unit
+		<KEY2>> (up key) 	  	Represents Key S2 from the unit
+		<KEY3>> (select/power key) 	Represents Key S3 from the unit
+Return: none
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+3. To simmulate a KeyHold (for zooming and power) just like pressing and holding a key from the unit
+
+Commands: 	<KEYHOLD0>> (back key) 	  	nothing special same as <KEY0>>
+		<KEYHOLD1>> (down key) 	  	change RF spectrum band or Zoom out on RF Graphs
+		<KEYHOLD2>> (up key) 	  	zoom in on spectrum
+		<KEYHOLD3>> (select/power key) 	Turn unit on or off
+
+Return: none
+
+Firmware supported:  EMF360+, EMF380, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+4. Get an emf reading
+
+Command: <GETEMF>>
+
+Return: 	Emf value in text/ASCII
+		e.g. : EMF = 3.5 mG
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+5. Get an ef reading
+
+Command: <GETEF>>
+
+Return: 	Ef Value in text/ASCII
+		e.g.: EF = 33.9 V/m
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+6. Get the current RF band data (Used in RF Spectrum mode)
+
+Command: <GETBANDDATA>>
+
+Return: 	Returns all the 128 channels dBm in text/string/ascii separated by commas and ends with dBm
+		-88,-88,-89,-88,-89,-87,-87,-89,-88,-87,-87,-86,-87,-87,-87,-86,
+		-87,-88,-88,-86,-87,-87,-87,-92,-88,-86,-87,-87,-87,-87,-85,-87,
+		-85,-86,-86,-87,-87,-86,-87,-93,-86,-88,-87,-87,-86,-87,-89,-87,
+		-87,-87,-88,-89,-89,-87,-89,-92,-89,-90,-89,-88,-88,-86,-91,-86,
+		-89,-90,-86,-86,-87,-89,-86,-87,-87,-89,-90,-88,-86,-90,-88,-88,
+		-87,-87,-86,-86,-86,-87,-89,-92,-90,-89,-88,-86,-86,-85,-87,-86,
+		-87,-88,-89,-89,-87,-87,-86,-78,-88,-87,-88,-87,-88,-88,-86,-85,
+		-87,-87,-90,-88,-86,-86,-89,-90,-88,-88,-88,-90,-90,-88,-88,-88, dBm
+
+Firmware supported:  EMF360+, EMF380, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+7. Get the current mode
+
+Command:	<GETMODE>>
+
+Return: 	Current Mode in text
+		e.g.:  64.00 - 108.00 MHz  MHz 
+		e.g2: Vertical EMF/EF
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+8. Gets the display screen in bitmap
+
+Command: <GETSCREEN>>
+
+Return:		Returns 1024 bytes of screen data(bitmap of the lcd screen 128x64) PLUS  0xAA
+		total of 1025 bytes
+		8E 51 59 95 53 51 8E FF 00 ...
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+9. Get configuration data
+
+Command:  <GETCFG>>
+
+Return: The configuration data.  Total 256 bytes will be returned.
+
+Here are the indexes of the configuration data
+_PowerOnOff,			// address 0x00
+_SpeakerOnOff,	
+_IdleDisplayMode,
+_BackLightTimeoutSeconds,
+_IdleTextState,
+_SwivelDisplay,			// 0x05
+_nDisplayContrast,
+_nLargeFontMode,	
+_nLCDBackLightLevel,
+_nReverseDisplayMode,	
+_LARGEFONTMODE,			// 0x0A
+_ALARMTYPE,
+_EMFALARM,
+_EFALARM,
+_RFALARM,
+_CUMMULATIVETIMEOUTFORRFGRAPH,	// 0x0F
+_LED_ONOFF,
+_Base_Frequency,
+_Channel_Spacing,
+_Bandwidth,
+_ZeroCalibrationByte0,		// 0x14
+_ZeroCalibrationByte1,
+_ZeroCalibrationByte2,
+_ZeroCalibrationByte3,
+_Reserved,
+_RfDensityUnit,			// 0x19
+_RfBrowserScale,
+_LargeFontEMForRF,
+_SpiSaveData,
+_SpiCircularAddress,
+_MaximumBytes,			// 0x1E
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+10. Erase all configuration data 
+
+Command:  <ECFG>>
+
+Note: 	If <GETCFG>> is used after this command, you will get 256 bytes of 0xFF
+
+Return: 0xAA
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+11. Write configuration data
+
+Command:  <WCFG[A1][A0][D0]>>
+	
+	A1 is the MSB of the address can only be 0x00
+	A0 is the MLB can be 0x00 - 0xFF 
+	D0 is the data byte(hex).
+
+Note: 	Can't write a byte from 0 to 1. Changing a byte from 0 to 1 will require erasing the CFG
+	So the proper way to use <WCFG>> is to:
+	First <GETCFG>> to read 256 config bytes, modify the value from the 512 bytes, <ECFG>>, then <<WCFG>> each of the 256 byte to the config. 
+
+Return: 0xAA, returns 0x55 if failed
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+12. 
+RESERVED
+
+/*******************************************************************************************************************************************************/
+13. get serial number
+
+Command: <GETSERIAL>>
+
+Return: serial number in 7 bytes.
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+14. Power OFF
+
+Command: <POWEROFF>>
+
+Return: none (Turns off the device)
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+15. Reload/Update/Refresh Configuration
+
+Command: <CFGUPDATE>>
+
+Return: 0xAA
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+16. Set realtime clock year
+
+command: <SETDATEYY[D0]>>
+
+	D0 is the year value in hexdecimal e.g. 0x12 will set it to 2018
+
+Return: 0xAA
+
+Firmware supported:  EMF380, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+17. Set realtime clock month
+
+command: <SETDATEMM[D0]>>
+
+	D0 is the month value in hexdecimal e.g. 0x01 for January
+	
+Return: 0xAA
+
+Firmware supported:  EMF380, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+18. Set realtime clock day
+
+command: <SETDATEDD[D0]>>
+
+	D0 is the day of the month value in hexdecimal
+	
+Return: 0xAA
+
+Firmware supported:  EMF380, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+19. Set realtime clock hour
+
+command: <SETTIMEHH[D0]>>
+
+	D0 is the hourvalue in hexdecimal
+	
+Return: 0xAA
+
+Firmware supported:  EMF380, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+20. Set realtime clock minute
+
+command: <SETTIMEMM[D0]>>
+
+	D0 is the minute value in hexdecimal
+	
+Return: 0xAA
+
+Firmware supported:  EMF380, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+21. Set realtime clock second
+
+command: <SETTIMESS[D0]>>
+
+	D0 is the second value in hexdecimal
+	
+Return: 0xAA
+
+Firmware supported:  EMF380, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+22. Reset unit to factory default
+
+command: <FACTORYRESET>>
+
+Return: 0xAA
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+23. Reboot unit
+
+command: <REBOOT>>
+
+Return: REBOOT
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+24. Set year date and time
+
+command: <SETDATETIME[YYMMDDHHMMSS]>>
+
+Return: 0xAA
+
+Firmware supported:  EMF380, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+25. Get year date and time
+
+command: <GETDATETIME>>
+
+	
+Return: Seven bytes data: YY MM DD HH MM SS 0xAA
+
+Firmware supported:  EMF380, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+26. Get gyroscope data
+
+command: <GETGYRO>>
+
+Return: Seven bytes gyroscope data in hexdecimal: BYTE1,BYTE2,BYTE3,BYTE4,BYTE5,BYTE6,BYTE7
+	Here: BYTE1,BYTE2 are the X position data in 16 bits value. The first byte is MSB byte data and second byte is LSB byte data.
+	      BYTE3,BYTE4 are the Y position data in 16 bits value. The first byte is MSB byte data and second byte is LSB byte data.
+	      BYTE5,BYTE6 are the Z position data in 16 bits value. The first byte is MSB byte data and second byte is LSB byte data.
+	      BYTE7 always 0xAA
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+27. Power ON
+
+Command: <POWERON>>
+
+Return: none
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+28. Turn speaker off
+
+Command: <SPEAKER0>>
+
+Return: 0xAA
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+29. Turn speaker on
+
+Command: <SPEAKER1>>
+
+Return: 0xAA
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+30. Gets the battery voltage
+
+Command: <GETVOLT>>
+
+Return: Battery Voltage in ascii (e.g.) 3.52 Volts
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+31. Turns on screen or Popup Information
+
+Command: <ECHOON>>
+
+NOTE: This turns on an automatic output to the serial in ascii
+	e.g. when hovering to the EMF unit menu, it will output the current cursor
+		->Main Menu
+	     or output a popup message to the serial
+
+Return: 0xAA
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+32. Turns off screen or popup information when navigating through the device
+
+Command: <ECHOOFF>>
+
+Return: 0xAA
+/*******************************************************************************************************************************************************/
+33. read spi data (saved log)
+
+Command: <SPIR[hi][mi][lo][b1][b0][>>
+			the [hi] [mi] [lo] parameters are three byte address and [b1][b0]
+			is the ammount of data you want.
+			e.g. (in hex) 3c 53 50 49 52 00 00 00 10 00 3e 3e
+			3c 53 50 49 52 	==>> is the "<SPIR" equivalent in hex
+			00 00 00 		==>> is the address in hex: 0
+			10 00			==>> the amount of bytes in hex: 4096 bytes
+			
+Return: 
+			55 AA 12 09 06 0B 0B 0E AA 55 00 00 71 AE 9C 3D 42 8C 96 49 
+			AA 55 00 00 06 D0 90 3D 42 8C 96 49 AA 55 00 00 0B F3 74 3D 
+			42 8C 96 49 AA 55 00 00 0D 69 85 3D 42 8C 96 49 AA 55 00 00 
+			71 AE 9C 3D 4D 87 BD 49 AA 55 00 00 9D D1 B5 3D 4D 87 BD 49 
+			AA 55 00 00 DF 02 60 3D 4D 87 BD 49 AA 55 00 00 06 D0 90 3D 
+			4D 87 BD 49 AA 55 00 00 06 D0 90 3D 4D 87 BD 49 AA 55 00 00 
+			4E 04 A9 3D 4D 87 BD 49 AA 55 00 00 DF 02 60 3D 4D 87 BD 49 
+			AA 55 00 00 0D 69 85 3D 3F 2B 6F 49 AA 55 00 00 0D 69 85 3D 
+			3F 2B 6F 49 AA 55 00 00 71 AE 9C 3D 3F 2B 6F 49 AA 55 00 00 
+			0D 69 85 3D (etc)
+			
+			// timestamp starts with 0x55 0xAA and is 8 bytes in total
+				e.g. 55 AA 12 09 06 0B 0B 0E ==>> 2018, September 6,  11:11:14
+			// data starts with 0xAA 0x55 and is 12 bytes long in total
+				e.g. AA 55 00 14 05 5A 43 3E 56 4E 70 48
+				Emf is 2 bytes. first 12 bits is the integer part and last 4
+						bits is decimal part. here is
+						00 14  ==>>> '001' is the integer part and '0' is dec.
+						00 14  ==>>> 1.4 mG
+				EF is 4 bytes float
+						05 5A 43 3E  ==>> these are the bytes of a floating point.
+											Need to use union data structure to	
+											get the data
+				rf is 4 bytes float
+						56 4E 70 48  ==>> same as EF
+
+Firmware supported:  EMF390***
+
+/*******************************************************************************************************************************************************/
+34. Erases SPI chip
+
+Command: <SPIE>>
+
+Return: 0xAA
+
+Firmware supported:  EMF390***
+
+/*******************************************************************************************************************************************************/
+35. Get the x, y, and z emf values
+
+Command: <GETXYZ>>
+
+Return: (e.g.) x=1.6,y=2.1,z=2.3 mG
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+//////////////
+These following rf commands only works in Rf Vertical screen
+///////////////
+36. Returns the max rf power in watts with the max rf frequency it detected (returns a string)
+
+Command: <GETRFWATTS>>
+
+Return:  3nW(866 MHz)
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+Note: The frequency might now work with EMF360/360v2.
+
+/*******************************************************************************************************************************************************/
+37. Returns the -dBm equivalent of the above command
+
+Command: <GETRFDBM>>
+
+Return: -54 dbm(868 MHz)
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+Note: The frequency might now work with EMF360/360v2.
+
+/*******************************************************************************************************************************************************/
+38. Returns the density equivalent of above command
+
+Command: <GETRFDENSITY>> 
+
+Return: 10.2mW/m2(868 MHz)
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+Note: The frequency might now work with EMF360/360v2.
+
+/*******************************************************************************************************************************************************/
+39.  Returns the total rf density 0.01-8G
+
+Command: <GETRFTOTALDENSITY>> 
+
+Return:  64.1 mW/m2(0.01-8G) 
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+Note: The frequency might now work with EMF360/360v2.
+
+/*******************************************************************************************************************************************************/
+40. Returns the peak of the total density
+
+Command: <GETRFTOTALDENSITYPEAK>>
+
+Return: 547.0 mW/m2 (0.24-7G Peak)
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+Note: The frequency might now work with EMF360/360v2.
+
+/*******************************************************************************************************************************************************/
+41. Sets the spectrum band
+
+Command: <SETSPECTRUMBAND1>>	2.4 - 2.5 GHz
+	 <SETSPECTRUMBAND2>>	etc.
+	 <SETSPECTRUMBAND3>>
+	 <SETSPECTRUMBAND4>>
+	 <SETSPECTRUMBAND5>>
+	 <SETSPECTRUMBAND6>>
+
+Return: 0xAA
+
+Firmware supported:  EMF360+, EMF380, EMF360+v2***, EMF380v2***, EMF390***
+
+Note: The unit must be in RF Spectrum mode 0x02-0x06 doesn't work with EMF360+
+
+/*******************************************************************************************************************************************************/
+42. Resets RF Peak
+
+Command: <RESETRFPEAK>>
+
+Return: 0xAA
+
+Firmware supported:  EMF360, EMF360+, EMF380, EMF360v2***, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+43. Resets/clears the band data in spectrum mode
+
+Command: <RESETBANDDATA>>
+
+Return: 0xAA
+
+Firmware supported:  EMF360+, EMF380, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+44. Resets RF Peak
+
+Command: <GETSPECTRUMFULLSCANFLAG>>
+
+Return: 2 bytes total (0x00 or 0x01) + 0xAA
+	e.g. 0x00 0xAA = not finished
+	     0x01 0xAA = finished
+		this flag is cleared after a successful <GETBANDDATA>> Call or <RESETBANDDATA>>
+
+Firmware supported:  EMF360+, EMF380, EMF360+v2***, EMF380v2***, EMF390***
+
+/*******************************************************************************************************************************************************/
+
+

@@ -16,14 +16,14 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol.GQRFC1701 import Protocol, GQRFC1701
+from libgqe.protocol.GQRFC1701 import Protocol
 
 from libgqe.protocol.GQRFC1701 import POWER, CFGUPDATE, ECFG, FACTORYRESET, GETDATETIME, GETGYRO, GETSERIAL, GETCFG
 from libgqe.protocol.GQRFC1701 import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH, SETDATEYY, SETDATEMM, SETDATETIME, KEY
 
 __all__ = [
     # Parent Classes
-    "Protocol", "V1_00",
+    "Protocol",
     # Commands
     "GETVER", "KEY", "KEYHOLD", "GETEMF", "GETEF", "GETBANDDATA", "GETMODE", "GETSCREEN",
     "GETCFG", "ECFG", "WCFG", "GETSERIAL", "POWER", "CFGUPDATE",
@@ -32,10 +32,3 @@ __all__ = [
     "GETGYRO", "SPEAKER", "GETVOLT", "ECHO",
     "SPIR", "SPIE", "GETRF", "SETSPECTRUMBAND", "RESETRFPEAK",
 ]
-
-
-class V1_00(GQRFC1701):
-    """ Initial Protocol Release """
-    def __init__(self, *args, **kwargs):
-        GQRFC1701.__init__(self, *args, **kwargs)
-        # print("Initializing protocol version {}".format('V1_00'))

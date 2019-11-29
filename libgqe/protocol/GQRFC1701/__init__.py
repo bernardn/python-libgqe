@@ -24,18 +24,9 @@ from libgqe.protocol import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH, SETDATEY
 
 __all__ = [
     # Parent Classes
-    "Protocol", "GQRFC1701",
+    "Protocol",
     # Commands
     "CFGUPDATE", "ECFG", "FACTORYRESET", "GETDATETIME", "GETGYRO", "GETSERIAL", "GETVER", "KEY", "POWER", "REBOOT",
     "SETDATEDD", "SETTIMESS", "SETTIMEMM", "SETTIMEHH", "SETDATEYY", "SETDATEMM", "SETDATETIME", "SPIR", "GETCFG"
 ]
 
-
-class GQRFC1701(Protocol):
-    """
-    GQ-RFC1701
-    """
-
-    def __init__(self, *args, **kwargs):
-        Protocol.__init__(self, *args, **kwargs)
-        # print("Initializing protocol {}".format('GQRFC1701'))

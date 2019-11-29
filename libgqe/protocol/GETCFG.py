@@ -1,5 +1,5 @@
 """
-GQ-RFC1201 protocol implementation: Command - GETCFG
+GQ-RFCXXXX protocols implementation: Command - GETCFG
 
 Copyright (c) Bernard Nauwelaerts 2019.
 All rights reserved
@@ -16,19 +16,29 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol.GQRFC1201 import Protocol, GQRFC1201
+from libgqe.protocol import Protocol
 
 
-class GETCFG(GQRFC1201):
+class GETCFG(Protocol):
     """ Get configuration data """
+    CFG_ITEMS = []
+    CFG_SIZE = 256
     ARGUMENTS = None
-    RESPONSE_TYPE = Protocol.Response.Bytes(256)
-    CFG_ITEMS = []  # Todo Get config memory map
-    for i in range(0, 256):
-        CFG_ITEMS.append("0x{:02X}".format(i))
+    RESPONSE_TYPE = Protocol.Response.Bytes(CFG_SIZE)
+    for i in range(len(CFG_ITEMS), CFG_SIZE):
+        CFG_ITEMS.append(str(i))
+
+    def __init__(self, *args, cfg_size=CFG_SIZE, cfg_items=tuple(CFG_ITEMS), **kwargs):
+        """
+            :arg: cfg_size
+            :arg: cfg_items
+        """
+        super().__init__(*args, **kwargs)
+        self.RESPONSE_TYPE.read_bytes = cfg_size
+        self.cfg_items = cfg_items
 
     def _parse_response(self, value):
         res = {}
-        for ptr in range(1-1, len(self.CFG_ITEMS)):
-            res[self.CFG_ITEMS[ptr]] = value[ptr]
+        for ptr in range(0, len(self.cfg_items)):
+            res[self.cfg_items[ptr]] = value[ptr]
         return res

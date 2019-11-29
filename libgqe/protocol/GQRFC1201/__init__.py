@@ -19,7 +19,7 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 from libgqe.protocol import Protocol
 from libgqe.protocol import POWER, REBOOT
-from libgqe.protocol import CFGUPDATE, ECFG, FACTORYRESET, GETDATETIME, GETGYRO, GETSERIAL, GETVER, KEY, SPIR
+from libgqe.protocol import CFGUPDATE, GETCFG, ECFG, FACTORYRESET, GETDATETIME, GETGYRO, GETSERIAL, GETVER, KEY, SPIR
 from libgqe.protocol import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH, SETDATEYY, SETDATEMM, SETDATETIME
 
 
@@ -28,7 +28,7 @@ __all__ = [
     "Protocol", "GQRFC1201",
     # Commands
     "CFGUPDATE", "ECFG", "FACTORYRESET", "GETDATETIME", "GETGYRO", "GETSERIAL", "GETVER", "KEY", "POWER", "REBOOT",
-    "SETDATEDD", "SETTIMESS", "SETTIMEMM", "SETTIMEHH", "SETDATEYY", "SETDATEMM", "SETDATETIME", "SPIR",
+    "SETDATEDD", "SETTIMESS", "SETTIMEMM", "SETTIMEHH", "SETDATEYY", "SETDATEMM", "SETDATETIME", "SPIR", "GETCFG"
 ]
 
 
@@ -42,4 +42,4 @@ class GQRFC1201(Protocol):
 
     def __init__(self, *args, **kwargs):
         Protocol.__init__(self, *args, **kwargs)
-        # print("Initializing protocol {}".format('GQRFC1801'))
+        # print("Initializing protocol {}".format('GQRFC1201'))

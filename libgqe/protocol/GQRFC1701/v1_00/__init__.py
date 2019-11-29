@@ -18,8 +18,8 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 from libgqe.protocol.GQRFC1701 import Protocol, GQRFC1701
 
-from libgqe.protocol.GQRFC1701 import POWER, CFGUPDATE, ECFG, FACTORYRESET, GETDATETIME, GETGYRO, GETSERIAL, KEY
-from libgqe.protocol.GQRFC1701 import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH, SETDATEYY, SETDATEMM, SETDATETIME
+from libgqe.protocol.GQRFC1701 import POWER, CFGUPDATE, ECFG, FACTORYRESET, GETDATETIME, GETGYRO, GETSERIAL, GETCFG
+from libgqe.protocol.GQRFC1701 import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH, SETDATEYY, SETDATEMM, SETDATETIME, KEY
 
 __all__ = [
     # Parent Classes

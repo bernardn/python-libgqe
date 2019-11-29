@@ -151,7 +151,7 @@ class Protocol:
 
         class Numeric:
             """Numeric argument type. First argument is minimal value, second the maximal. If arguments are a string,
-            the value will be outputed as ascii, if not as binary"""
+            the value will be output as ascii, if not as binary"""
             def __init__(self, minimum, maximum):
                 self._min_max = (minimum, maximum)
                 self.value = None

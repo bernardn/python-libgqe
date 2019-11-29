@@ -62,6 +62,3 @@ class Format:
             raise TypeError("Unknown output file object type: {}".format(type(self.out_file)))
 
         return self.out_file_io
-
-    class NeedsList(ValueError):
-        """NeedsListError"""

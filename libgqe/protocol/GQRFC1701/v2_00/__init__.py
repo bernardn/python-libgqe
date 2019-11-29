@@ -17,8 +17,7 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 """
 
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1701.v1_00 import V1_00
+from libgqe.protocol.GQRFC1701.v1_00 import Protocol
 from libgqe.protocol.GQRFC1701.v1_00 import GETVER, GETSERIAL, POWER, REBOOT, GETGYRO, SPEAKER, GETVOLT, ECHO
 from libgqe.protocol.GQRFC1701.v1_00 import KEY, KEYHOLD, GETMODE, GETSCREEN, GETEMF, GETEF, GETRF, RESETRFPEAK
 from libgqe.protocol.GQRFC1701.v1_00 import GETCFG, ECFG, WCFG, CFGUPDATE, FACTORYRESET
@@ -29,7 +28,7 @@ from libgqe.protocol.GQRFC1701.v1_00 import GETBANDDATA, SETSPECTRUMBAND
 
 __all__ = [
     # Parent Classes
-    "Protocol", "V2_00",
+    "Protocol",
     # Commands
     "GETVER", "KEY", "KEYHOLD", "GETEMF", "GETEF", "GETBANDDATA", "GETMODE", "GETSCREEN",
     "GETCFG", "ECFG", "WCFG", "GETSERIAL", "POWER", "CFGUPDATE",
@@ -39,10 +38,3 @@ __all__ = [
     "SPIR", "SPIE", "GETRF", "SETSPECTRUMBAND", "RESETRFPEAK",
     "GETXYZ", "RESETBANDDATA", "GETSPECTRUMFULLSCANFLAG"
 ]
-
-
-class V2_00(V1_00):
-    """ Added GETXYZ, RESETBANDDATA and GETSPECTRUMFULLSCANFLAG """
-    def __init__(self, *args, **kwargs):
-        V1_00.__init__(self, *args, **kwargs)
-        # print("Initializing protocol version {}".format('V2_00'))

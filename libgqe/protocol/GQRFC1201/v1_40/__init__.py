@@ -16,7 +16,7 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol.GQRFC1201 import Protocol, GQRFC1201
+from libgqe.protocol.GQRFC1201 import Protocol
 from libgqe.protocol.GQRFC1201 import POWER, REBOOT, FACTORYRESET
 from libgqe.protocol.GQRFC1201 import GETCFG, CFGUPDATE, ECFG, GETDATETIME, GETGYRO, GETSERIAL, GETVER, KEY, SPIR
 from libgqe.protocol.GQRFC1201 import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH, SETDATEYY, SETDATEMM, SETDATETIME
@@ -24,17 +24,8 @@ from libgqe.protocol.GQRFC1201 import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH
 
 __all__ = [
     # Parent Classes
-    "Protocol", "GQRFC1201", "V1_40",
+    "Protocol",
     # Commands
     "CFGUPDATE", "ECFG", "FACTORYRESET", "GETDATETIME", "GETGYRO", "GETSERIAL", "GETVER", "KEY", "POWER", "REBOOT",
     "SETDATEDD", "SETTIMESS", "SETTIMEMM", "SETTIMEHH", "SETDATEYY", "SETDATEMM", "SETDATETIME", "SPIR", "GETCFG"
 ]
-
-
-class V1_40(GQRFC1201):
-    """
-    GQ-RFC1201 V1.40
-    """
-    def __init__(self, *args, **kwargs):
-        GQRFC1201.__init__(self, *args, **kwargs)
-        # print("Initializing protocol {}".format('GQRFC1201'))

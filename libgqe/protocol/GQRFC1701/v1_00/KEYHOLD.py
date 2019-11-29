@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1701 import GQRFC1701
+from libgqe.protocol.GQRFC1701.v1_00 import Protocol
 
 
-class KEYHOLD(GQRFC1701):
+class KEYHOLD(Protocol):
     """ Simulates a key hold (press and hold) from the unit. arg : ascii 0-3 """
     ARGUMENTS = [Protocol.Argument.Numeric('0', '3')]
     RESPONSE_TYPE = None

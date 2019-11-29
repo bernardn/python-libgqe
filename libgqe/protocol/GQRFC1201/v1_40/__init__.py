@@ -16,7 +16,7 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol.GQRFC1201 import GQRFC1201
+from libgqe.protocol.GQRFC1201 import Protocol, GQRFC1201
 from libgqe.protocol.GQRFC1201 import POWER, REBOOT, FACTORYRESET
 from libgqe.protocol.GQRFC1201 import GETCFG, CFGUPDATE, ECFG, GETDATETIME, GETGYRO, GETSERIAL, GETVER, KEY, SPIR
 from libgqe.protocol.GQRFC1201 import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH, SETDATEYY, SETDATEMM, SETDATETIME
@@ -24,7 +24,7 @@ from libgqe.protocol.GQRFC1201 import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH
 
 __all__ = [
     # Parent Classes
-    "GQRFC1201", "V1_40",
+    "Protocol", "GQRFC1201", "V1_40",
     # Commands
     "CFGUPDATE", "ECFG", "FACTORYRESET", "GETDATETIME", "GETGYRO", "GETSERIAL", "GETVER", "KEY", "POWER", "REBOOT",
     "SETDATEDD", "SETTIMESS", "SETTIMEMM", "SETTIMEHH", "SETDATEYY", "SETDATEMM", "SETDATETIME", "SPIR", "GETCFG"

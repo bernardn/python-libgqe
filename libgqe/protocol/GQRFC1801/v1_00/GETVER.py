@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1201 import GQRFC1201
+from libgqe.protocol.GQRFC1801.v1_00 import Protocol
 
 
-class GETVER(GQRFC1201):
+class GETVER(Protocol):
     """Get hardware model and version"""
     ARGUMENTS = None
     # Todo protocol : needs either terminator or fixed length

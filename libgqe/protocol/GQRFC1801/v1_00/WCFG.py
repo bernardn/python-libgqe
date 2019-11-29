@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1801 import GQRFC1801
+from libgqe.protocol.GQRFC1801.v1_00 import Protocol
 
 
-class WCFG(GQRFC1801):
+class WCFG(Protocol):
     """
     Write configuration data byte
 

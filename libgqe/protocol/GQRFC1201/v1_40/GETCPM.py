@@ -16,10 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol.GQRFC1201 import Protocol, GQRFC1201
+from libgqe.protocol.GQRFC1201.v1_40 import Protocol
 
 
-class GETCPM(GQRFC1201):
+class GETCPM(Protocol):
     """Retrieve the current Counts Per Minute"""
     ARGUMENTS = None
     RESPONSE_TYPE = Protocol.Response.Bytes(2)

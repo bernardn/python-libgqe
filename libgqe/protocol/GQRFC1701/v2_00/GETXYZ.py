@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1701.v2_00 import V2_00
+from libgqe.protocol.GQRFC1701.v1_00 import Protocol
 
 
-class GETXYZ(V2_00):
+class GETXYZ(Protocol):
     """ Get the x, y, and z EMF values """
     ARGUMENTS = None
     RESPONSE_TYPE = Protocol.Response.Terminator(b'mG')

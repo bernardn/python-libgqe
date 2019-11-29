@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1701 import GQRFC1701
+from libgqe.protocol.GQRFC1701.v1_00 import Protocol
 
 
-class GETMODE(GQRFC1701):
+class GETMODE(Protocol):
     """ Get the current mode """
     ARGUMENTS = None
     # Todo protocol missing len or terminator

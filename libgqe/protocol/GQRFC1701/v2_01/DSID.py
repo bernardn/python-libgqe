@@ -16,10 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol.GQRFC1701.v2_01 import Protocol, V2_01
+from libgqe.protocol.GQRFC1701.v2_01 import Protocol
 
 
-class DSID(V2_01):
+class DSID(Protocol):
     """Undocumented command"""
     ARGUMENTS = None
     RESPONSE_TYPE = Protocol.Response.Bytes(8)

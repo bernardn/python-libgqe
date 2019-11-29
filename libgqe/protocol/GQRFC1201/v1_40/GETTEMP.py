@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1201 import GQRFC1201
+from libgqe.protocol.GQRFC1201.v1_40 import Protocol
 
 
-class GETTEMP(GQRFC1201):
+class GETTEMP(Protocol):
     """Retrieve the current temperature"""
     ARGUMENTS = None
     RESPONSE_TYPE = Protocol.Response.Bytes(4)

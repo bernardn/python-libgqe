@@ -16,7 +16,7 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
+from libgqe.protocol.GQRFC1701.v1_00 import Protocol
 from libgqe.protocol.GETVER import GETVER as GETVER_PROTO
 
 

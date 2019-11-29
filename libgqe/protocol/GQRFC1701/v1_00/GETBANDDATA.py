@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1701 import GQRFC1701
+from libgqe.protocol.GQRFC1701.v1_00 import Protocol
 
 
-class GETBANDDATA(GQRFC1701):
+class GETBANDDATA(Protocol):
     """ Get the current RF band data (Used in RF Spectrum mode) """
     ARGUMENTS = None
     RESPONSE_TYPE = Protocol.Response.Terminator(b'dBm')

@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1701 import GQRFC1701
+from libgqe.protocol.GQRFC1701.v1_00 import Protocol
 
 
-class GETRF(GQRFC1701):
+class GETRF(Protocol):
     """
         Returns the max rf power in watts with the max rf frequency it detected
         :argument: WATTS, DBM, DENSITY, 8GTOTALDENSITY, 8GTOTALPEAK in ascii

@@ -16,10 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol.GQRFC1201 import Protocol, GQRFC1201
+from libgqe.protocol.GQRFC1201.v1_40 import Protocol
 
 
-class HEARTBEAT(GQRFC1201):
+class HEARTBEAT(Protocol):
     """ Set the heartbeat OFF/ON. """
     ARGUMENTS = [
         Protocol.Argument.Binary('0', '1')

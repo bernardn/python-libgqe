@@ -16,11 +16,10 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol import Protocol
-from libgqe.protocol.GQRFC1801 import GQRFC1801
+from libgqe.protocol.GQRFC1801.v1_00 import Protocol
 
 
-class Echo(GQRFC1801):
+class Echo(Protocol):
     """Disable/enable sending of unit's screen and popup information to RS232"""
     ARGUMENTS = [
         Protocol.Argument.Binary('OFF', 'ON')

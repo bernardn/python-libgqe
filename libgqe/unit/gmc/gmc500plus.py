@@ -16,13 +16,12 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.unit.gmc.gmc500 import GMC500
+from libgqe.unit.gmc import GMC
 
 
-class GMC500Plus(GMC500):
+class GMC500Plus(GMC):
     """GMC500+ unit base class"""
     MODULES = ["RTC", "SPI", "MultiTubes"]
-    SPI_SIZE = 1048576
 
     def __init__(self, **kwargs):
-        GMC500.__init__(self, **kwargs)
+        GMC.__init__(self, **kwargs)

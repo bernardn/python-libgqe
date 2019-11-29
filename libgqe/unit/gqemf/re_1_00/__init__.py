@@ -133,6 +133,6 @@ class Re_1_00(GQEMF):
 
     def cmd_get_cfg(self, *args, **kwargs):
         """Retrieve unit's configuration"""
-        cmd = GETCFG.GETCFG(self.rw_functions, *args, **kwargs)
+        cmd = GETCFG.GETCFG(self.rw_functions, *args, cfg_size=self.CFG_SIZE, cfg_items=self.CFG_ITEMS, **kwargs)
         cmd.send()
         return cmd.response

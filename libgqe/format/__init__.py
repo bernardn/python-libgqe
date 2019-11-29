@@ -51,15 +51,11 @@ class Format:
             return self.out_file_io
 
         if isinstance(self.out_file, TextIOWrapper):
-            # if type_data == bytes or type_data == bytearray:
-            #     raise TypeError("Can't write binary data to text io")
             self.out_file_io = self.out_file
         elif isinstance(self.out_file, str):
             mode = 'w'
-            # sys.stderr.write('Writing  file with type {}'.format(type_data))
             if type_data in (bytes, bytearray):
                 mode += 'b'
-                # sys.stderr.write('Writing binary file')
             self.out_file_io = open(self.out_file, mode)
             # Todo close that file at some point
         else:

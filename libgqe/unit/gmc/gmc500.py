@@ -21,8 +21,6 @@ from libgqe.unit.gmc import GMC
 
 class GMC500(GMC):
     """GMC500 unit base class"""
-    MODULES = ["RTC", "SPI"]
-    SPI_SIZE = 1048576
 
     def __init__(self, **kwargs):
         GMC.__init__(self, **kwargs)

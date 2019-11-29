@@ -49,27 +49,29 @@ class GQEMF(Unit):
         "nLargeFontMode",
         "nLCDBackLightLevel",
         "nReverseDisplayMode",
-        "LARGEFONTMODE",                 # 0x0A
-        "ALARMTYPE",
-        "EMFALARM",
-        "EFALARM",
-        "RFALARM",
-        "CUMMULATIVETIMEOUTFORRFGRAPH",  # 0x0F
-        "LED_ONOFF",
-        "Base_Frequency",
-        "Channel_Spacing",
+        "LargeFontMode",                 # 0x0A
+        "AlarmType",                     # 0x0B  1=beep,2=ghost,0=siren
+        "EmfAlarm",
+        "EfAlarm",
+        "RfAlarm",
+        "CumulativeTimeoutForRFGraph",   # 0x0F
+        "LedOnOff",
+        "BaseFrequency",
+        "ChannelSpacing",
         "Bandwidth",
         "ZeroCalibrationByte0",          # 0x14
         "ZeroCalibrationByte1",
         "ZeroCalibrationByte2",
         "ZeroCalibrationByte3",
-        "Reserved",
+        "Reserved_01",
         "RfDensityUnit",                 # 0x19
         "RfBrowserScale",
         "LargeFontEMForRF",
         "SpiSaveData",                   # 0x1C
         "SpiCircularAddress",
-        "MaximumBytes",                  # 0x1E
+        "SoundVolume",                   # 0x1E
+        "EmfUnit",                       # 0x1F 0=mG; 1=uT
+        "RfSensitivity"                  # 0x20 0=standard; 1=sensitive;
     ]
 
     def __init__(self, *args, **kwargs):

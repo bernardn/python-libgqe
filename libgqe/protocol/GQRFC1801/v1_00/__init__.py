@@ -16,7 +16,7 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 
 """
 
-from libgqe.protocol.GQRFC1801 import Protocol, GQRFC1801
+from libgqe.protocol.GQRFC1801 import Protocol, GQRFC1801, GETCFG
 from libgqe.protocol.GQRFC1701 import POWER, REBOOT, CFGUPDATE, ECFG, FACTORYRESET, GETDATETIME, GETGYRO, GETSERIAL, KEY
 from libgqe.protocol.GQRFC1701 import SETDATEDD, SETTIMESS, SETTIMEMM, SETTIMEHH, SETDATEYY, SETDATEMM, SETDATETIME
 

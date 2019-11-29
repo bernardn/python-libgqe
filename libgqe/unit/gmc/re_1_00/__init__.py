@@ -61,12 +61,6 @@ class Re_1_00(GMC):
         cmd = FACTORYRESET.FACTORYRESET(self.rw_functions)
         cmd.send()
 
-    def cmd_get_cfg(self, *args, raw=False, **kwargs):      # pylint: disable=unused-argument
-        """Retrieve unit's configuration"""
-        cmd = GETCFG.GETCFG(self.rw_functions)
-        cmd.send()
-        return cmd.response
-
     def cmd_get_cpm(self, *args, **kwargs):                 # pylint: disable=unused-argument
         """Retrieve counts per minute"""
         cmd = GETCPM.GETCPM(self.rw_functions)
@@ -116,3 +110,9 @@ class Re_1_00(GMC):
         """Set the speaker on/off"""
         cmd = SPEAKER.SPEAKER(self.rw_functions)
         cmd.send(off_on)
+
+    def cmd_get_cfg(self, *args, **kwargs):
+        """Retrieve unit's configuration"""
+        cmd = GETCFG.GETCFG(self.rw_functions, *args, cfg_size=self.CFG_SIZE, cfg_items=self.CFG_ITEMS, **kwargs)
+        cmd.send()
+        return cmd.response

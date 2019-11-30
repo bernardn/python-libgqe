@@ -27,7 +27,7 @@ class GETSCREEN(Protocol):
     RESPONSE_TYPE = Protocol.Response.Bytes(int(WIDTH * HEIGHT / 8) + 1)
 
     def __init__(self, rw_connector=(None, None), *args, **kwargs):
-        GQRFC1701.__init__(self, rw_connector, *args, **kwargs)
+        Protocol.__init__(self, rw_connector, *args, **kwargs)
         self.response = b''
 
     def _parse_response(self, value):

@@ -17,10 +17,9 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 """
 
 from libgqe.protocol.GQRFC1701.v1_00 import Protocol
-from libgqe.protocol.GETVER import GETVER as GETVER_PROTO
 
 
-class GETVER(GETVER_PROTO):
+class GETVER(Protocol):
     """Get hardware model and version"""
     ARGUMENTS = None
     RESPONSE_TYPE = Protocol.Response.Terminator(b'\r\n')

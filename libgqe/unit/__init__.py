@@ -65,8 +65,11 @@ class Unit:
         if not model or not version:
             cmd = GETVER.GETVER(self.rw_functions)
             cmd.send()
-            model = cmd.response[0]
-            version = cmd.response[1]
+            if isinstance(cmd.response, tuple):
+                model = cmd.response[0]
+                version = cmd.response[1]
+            else:
+                raise Unit.UnknownUnitVersionStringError(cmd.response)
 
         # Load Model
         classes = []
@@ -199,4 +202,7 @@ class Unit:
         """Risen when specified action is unavailable"""
 
     class UnknownUnitModelError(BaseException):
+        """Risen when unit model is unknown to this software"""
+
+    class UnknownUnitVersionStringError(BaseException):
         """Risen when unit model is unknown to this software"""

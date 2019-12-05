@@ -99,6 +99,9 @@ def main():
     except Unit.UnknownUnitModelError:
         print('{} : The specified unit model is unknown to this software.'.format(args.unit), file=sys.stderr)
         sys.exit(1)
+    except Unit.UnknownUnitVersionStringError as err:
+        print('Unable to interpret the version string: {}'.format(err), file=sys.stderr)
+        sys.exit(1)
 
     group_2 = parser.add_argument_group('actions available on unit:')
     for act, dta in unit.actions.items():

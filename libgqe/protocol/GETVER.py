@@ -29,4 +29,5 @@ class GETVER(Protocol):
     def _parse_response(self, value):
         regex = re.compile('([A-z\\-0-9\\\\+]+) ?(Re ?[0-9\\\\.]+)')
         mod_val = regex.match(value.decode('ascii'))
-        return mod_val.groups()
+        if mod_val:
+            return mod_val.groups()

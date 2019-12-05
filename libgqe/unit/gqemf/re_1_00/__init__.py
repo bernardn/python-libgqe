@@ -126,7 +126,7 @@ class Re_1_00(GQEMF):
         cmd.send()
 
     def cmd_get_screen(self, *args, **kwargs):
-        """Retrieve unit's LCD controller memory data"""
+        """Retrieve unit's display data. Available formats: bmp, pbm and raw."""
         cmd = GETSCREEN.GETSCREEN(self.rw_functions, *args, **kwargs)
         cmd.send()
         return cmd.response

@@ -70,6 +70,7 @@ def main():
 
     group_1 = parser.add_argument_group('interface')
     group_1.add_argument('port', type=str, help='RS232 interface to the unit to be controlled')
+    group_1.add_argument('--baud-rate', help='Serial interface baud rate. Defaults to 115200', default=115200)
     group_1.add_argument('--unit', help='Unit model ID')
     group_1.add_argument('--revision', help='Unit firmware revision')
 
@@ -90,7 +91,7 @@ def main():
         if args.revision:
             vers = args.revision
         # todo autolad in unit
-        unit = Unit(port=args.port, unit=unit, version=vers)
+        unit = Unit(port=args.port, baud_rate=args.baud_rate, unit=unit, version=vers)
         unit = unit.auto_load()
 
     except FileNotFoundError as err:

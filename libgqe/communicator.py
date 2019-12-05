@@ -27,7 +27,7 @@ class Communicator:
         self.rw_functions = (self.read, self.write)
 
         try:
-            self.interface = serial.Serial(self._device, 115200, timeout=1.5)
+            self.interface = serial.Serial(self._device, kwargs['baud_rate'], timeout=1.5)
         except serial.serialutil.SerialException as err:
             print(err)
             sys.exit(1)

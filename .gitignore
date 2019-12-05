@@ -4,6 +4,9 @@
 *.bin
 *.bmp
 *.csv
+*.egg
 __pycache__/
 data/
 screen/
+build/
+python_libgqe.egg-info/

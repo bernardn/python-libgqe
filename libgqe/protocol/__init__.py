@@ -33,14 +33,16 @@ class Protocol:
     ARGUMENTS = []
     RESPONSE_TYPE = None
 
-    def __init__(self, rw_connectors, *args, out_format=None, **kwargs):  # pylint: disable=unused-argument
+    def __init__(self, rw_connectors, *args, **kwargs):  # pylint: disable=unused-argument
         self.response = ''
-        self.format = out_format
+        self.format = None
         self.reader = rw_connectors[0]
         self.writer = rw_connectors[1]
         self._args = []
         self.read_bytes = 0
         self.unit = None
+        if "format" in kwargs:
+            self.format = kwargs["format"]
 
     def build(self, args=()):
         """ Command's binary representation """

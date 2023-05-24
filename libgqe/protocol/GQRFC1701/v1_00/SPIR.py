@@ -25,6 +25,17 @@ from libgqe.protocol.SPIR import SPIR as SPIR_PROTO
 
 class SPIR(SPIR_PROTO):
     """ Read SPI memory data (data log) """
+    SRC = [
+        "---"
+        "Smart Meter",
+        "Cell Tower",
+        "Microwave",
+        "WiFi/Phone",
+        "Static",
+        "AC EF",
+        "Power Line"
+    ]
+
     def decode_spi_chunk(self, data):
         pdb = 0  # Data byte pointer
         lnd = len(data)
@@ -50,11 +61,19 @@ class SPIR(SPIR_PROTO):
                     emf = (data[pdb+2] * 16 + data[pdb+3] >> 4) + (data[pdb+3] & 15) / 10
                     ef = struct.unpack('<f', data[pdb+4:pdb+8])[0]
                     rf = struct.unpack('<f', data[pdb+8:pdb+12])[0]
+                    src = "---"
+                    if lnd - pdb >= 14 and data[pdb+12] == b'\x5a':  # Source
+                        try:
+                            src = self.SRC[ord(data[pdb + 13])]
+                        except IndexError:
+                            src = "Mixed"
+                        pdb += 2
                     yield {
                         'ts': datetime.datetime.fromtimestamp(ts),
                         'emf': emf, 'emf-unit': 'mG',
                         'ef': ef, 'ef-unit': 'V/m',
-                        'rf': rf, 'rf-unit': 'pW/cm2'
+                        'rf': rf, 'rf-unit': 'pW/cm2',
+                        'src': src
                     }
                     pdb += 12
                     ts += 1

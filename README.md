@@ -1,38 +1,45 @@
 # python-libgqe
 
-A library for interfacing GQ Electronics measurement devices.
+A library for interfacing [GQ Electronics](http://www.gqelectronicsllc.com/comersus/store/comersus_dynamicIndex.asp?idAffiliate=7394) radiation measurement devices.
 
 ## Protocols
 
 The following protocols have been implemented :
-- GQ-RFC1201
-- GQ-RFC1701
-- GQ-RFC1801
+- [GQ-RFC1201](doc/GQ-RFC1201.txt)
+- [GQ-RFC1701](doc/GQ-RFC1701.txt)
+- [GQ-RFC1801](doc/GQ-RFC1801.txt)
 
 ## Units
 
 The following device units have been TESTED with this software :
 
-- GQEMF-390
+### EMF meters
+- [GQEMF-390](https://www.gqelectronicsllc.com/comersus/store/comersus_viewItem.asp?idAffiliate=7394&idProduct=5678)
+
 
 The following device units have been implemented in this software:
 
-- GQEMF-360
+### EMF meters
+- [GQEMF-360](https://www.gqelectronicsllc.com/comersus/store/comersus_viewItem.asp?idAffiliate=7394&idProduct=5682)
 - GQEMF-360+
 - GQEMF-380
-- GQEMF-390
+- [GQEMF-390](https://www.gqelectronicsllc.com/comersus/store/comersus_viewItem.asp?idAffiliate=7394&idProduct=5678)
 
-- GMC-500
-- GMC-500+
+### Geiger-Müller counters
+- [GMC-500](https://www.gqelectronicsllc.com/comersus/store/comersus_viewItem.asp?idAffiliate=7394&idProduct=5629)
+- [GMC-500+](https://www.gqelectronicsllc.com/comersus/store/comersus_viewItem.asp?idAffiliate=7394&idProduct=5631)
 - GMC-600
-- GMC-600+
+- [GMC-600+](https://www.gqelectronicsllc.com/comersus/store/comersus_viewItem.asp?idAffiliate=7394&idProduct=5637)
 
 The following device units will probably some day be implemented in this software:
+
+### Geiger-Müller counters
 
 - GMC-280
 - GMC-300
 - GMC-300+
 - GMC-320
+- [GMC-320+](https://www.gqelectronicsllc.com/comersus/store/comersus_viewItem.asp?idAffiliate=7394&idProduct=4579)
 
 ## Quick start
 
@@ -132,3 +139,7 @@ actions available on unit::
   --spi-get             Retrieve unit's data log
   --wait WAIT           Wait for the specified number of seconds to elapse
 ```
+
+## Disclaimer
+
+This software is private initiative, conducted independently of [GQ Electronics LLC](http://www.gqelectronicsllc.com/comersus/store/comersus_dynamicIndex.asp?idAffiliate=7394).

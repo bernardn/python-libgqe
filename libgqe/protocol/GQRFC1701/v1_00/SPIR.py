@@ -62,9 +62,9 @@ class SPIR(SPIR_PROTO):
                     ef = struct.unpack('<f', data[pdb+4:pdb+8])[0]
                     rf = struct.unpack('<f', data[pdb+8:pdb+12])[0]
                     src = "---"
-                    if lnd - pdb >= 14 and data[pdb+12] == b'\x5a':  # Source
+                    if lnd - pdb >= 14 and data[pdb+12:pdb+13] == b'\x5a':  # Source
                         try:
-                            src = self.SRC[ord(data[pdb + 13])]
+                            src = self.SRC[ord(data[pdb+13:pdb+14])]
                         except IndexError:
                             src = "Mixed"
                         pdb += 2

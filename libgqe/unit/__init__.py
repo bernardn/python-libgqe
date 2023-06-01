@@ -20,8 +20,10 @@ __all__ = [
 ]
 
 import importlib
+import re
 import time
 import operator
+
 from types import GeneratorType
 import yaml
 
@@ -77,10 +79,9 @@ class Unit:
         model = model.replace('_', '')
         model = model.replace('-', '')
         model = model.replace('+', 'Plus')
-        cmodel = model.rstrip('Plus')
-        cmodel = cmodel.rstrip('0123456789')
+        cmodel = re.match("^[A-Z]+", model).group()
         try:
-            mod_unit = importlib.import_module('libgqe.unit.{}.{}'.format(cmodel.lower(), model.lower()))
+            mod_unit = importlib.import_module(f"libgqe.unit.{cmodel.lower()}.{model.lower()}")
         except ModuleNotFoundError:
             raise Unit.UnknownUnitModelError(self.kwargs['unit'])
 

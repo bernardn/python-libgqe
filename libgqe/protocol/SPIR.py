@@ -26,6 +26,7 @@ class SPIR(Protocol):
     ARGUMENTS = [Protocol.Argument.Numeric(0, 255)] * 5
     RESPONSE_TYPE = Protocol.Response.Bytes(4096)
     SPI_SIZE = 4096
+    SPI_DATA_LENGTH = 12
 
     def __init__(self, rw_connectors, *args, **kwargs):
         Protocol.__init__(self, rw_connectors, *args, **kwargs)
@@ -53,8 +54,7 @@ class SPIR(Protocol):
         except SPIR.EmptyDataError:
             pass
         except Exception as err:  # pylint: disable=broad-except
-            sys.stderr.write("\n")
-            sys.stderr.write("Exception in SPIR : {}".format(err))
+            sys.stderr.write("\nException in SPIR : {}".format(err))
         finally:
             sys.stderr.write("\n")
 

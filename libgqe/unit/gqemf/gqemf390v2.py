@@ -1,5 +1,5 @@
 """
-SPI actions
+GQ-EMF390 unit layer
 
 Copyright (c) Bernard Nauwelaerts 2019.
 All rights reserved
@@ -17,23 +17,14 @@ if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth F
 """
 
 from libgqe.unit.gqemf import GQEMF
-from libgqe.protocol.GQRFC1701.v1_00 import SPIR, SPIE
 
 
-class SPI(GQEMF):
-    """SPI class"""
-    SPI_SIZE = 0
-    SPI_DATA_LENGTH = 0
+class GQEMF390v2(GQEMF):
+    """GQEMF 390v2 unit abstraction class"""
+    MODULES = ["RTC", "Spectrum", "SPI"]
 
-    def cmd_spi_get(self, *args, **kwargs):
-        """Retrieve unit's data log"""
-        cmd = SPIR.SPIR(self.rw_functions, *args, **kwargs)
-        cmd.SPI_SIZE = self.SPI_SIZE
-        cmd.SPI_DATA_LENGTH = self.SPI_DATA_LENGTH
-        for rec in cmd.get_all():
-            yield rec
+    SPI_SIZE = 1048576
+    SPI_DATA_LENGTH = 14
 
-    def cmd_spi_erase(self, *args, **kwargs):
-        """Erase unit's data log"""
-        cmd = SPIE.SPIE(self.rw_functions, *args, **kwargs)
-        cmd.send()
+    def __init__(self, *args, **kwargs):
+        GQEMF.__init__(self, *args, **kwargs)

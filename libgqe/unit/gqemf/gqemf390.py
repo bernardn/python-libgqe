@@ -24,6 +24,7 @@ class GQEMF390(GQEMF):
     MODULES = ["RTC", "Spectrum", "SPI"]
 
     SPI_SIZE = 1048576
+    SPI_DATA_LENGTH = 12
 
     def __init__(self, *args, **kwargs):
         GQEMF.__init__(self, *args, **kwargs)

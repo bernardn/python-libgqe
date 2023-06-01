@@ -57,7 +57,7 @@ class SPIR(SPIR_PROTO):
                 else:
                     break
             elif data[pdb:pdb+2] == b'\xaa\x55':  # Data
-                if lnd - pdb >= 12:
+                if lnd - pdb >= self.SPI_DATA_LENGTH:
                     emf = (data[pdb+2] * 16 + data[pdb+3] >> 4) + (data[pdb+3] & 15) / 10
                     ef = struct.unpack('<f', data[pdb+4:pdb+8])[0]
                     rf = struct.unpack('<f', data[pdb+8:pdb+12])[0]

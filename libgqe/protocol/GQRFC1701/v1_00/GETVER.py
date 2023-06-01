@@ -25,7 +25,7 @@ class GETVER(Protocol):
     RESPONSE_TYPE = Protocol.Response.Terminator(b'\r\n')
 
     def _parse_response(self, value):
-        # Todo parse strings which can be of variable length (plus models)
-        mod = value[0:9]
-        ver = value[9:16]
+        pos = value.decode().find("Re")
+        mod = value[0:pos]
+        ver = value[pos:pos+7]
         return mod.decode(), ver.decode()

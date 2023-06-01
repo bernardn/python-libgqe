@@ -31,6 +31,7 @@ class SPIR(Protocol):
     def __init__(self, rw_connectors, *args, **kwargs):
         Protocol.__init__(self, rw_connectors, *args, **kwargs)
         self._chunk_remainder = b''
+        self._last_ts = 0
 
     def get_all(self):
         """ Retrieve all SPI records from the unit """

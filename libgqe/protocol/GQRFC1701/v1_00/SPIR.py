@@ -39,7 +39,7 @@ class SPIR(SPIR_PROTO):
     def decode_spi_chunk(self, data):
         pdb = 0  # Data byte pointer
         lnd = len(data)
-        ts = 0
+        ts = self._last_ts
         dt = datetime.datetime.now()
         while pdb < lnd:
             if data[pdb:pdb+2] == b'\x55\xaa':    # Timestamp
@@ -86,3 +86,4 @@ class SPIR(SPIR_PROTO):
                 raise ValueError('Invalid SPI data chunk at address 0x{:x} : {}'.format(pdb, data[pdb:pdb+2]))
 
         self._chunk_remainder = data[pdb:]
+        self._last_ts = ts
